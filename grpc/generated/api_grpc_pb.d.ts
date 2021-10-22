@@ -23,6 +23,21 @@ interface IAPIService extends grpc.ServiceDefinition<grpc.UntypedServiceImplemen
 
 export const APIService: IAPIService;
 
+export interface IAPIServer extends grpc.UntypedServiceImplementation {
+  createStream: grpc.handleUnaryCall<api_pb.CreateStreamRequest, api_pb.CreateStreamResponse>;
+  deleteStream: grpc.handleUnaryCall<api_pb.DeleteStreamRequest, api_pb.DeleteStreamResponse>;
+  pauseStream: grpc.handleUnaryCall<api_pb.PauseStreamRequest, api_pb.PauseStreamResponse>;
+  setStreamReadonly: grpc.handleUnaryCall<api_pb.SetStreamReadonlyRequest, api_pb.SetStreamReadonlyResponse>;
+  subscribe: grpc.handleServerStreamingCall<api_pb.SubscribeRequest, api_pb.Message>;
+  fetchMetadata: grpc.handleUnaryCall<api_pb.FetchMetadataRequest, api_pb.FetchMetadataResponse>;
+  fetchPartitionMetadata: grpc.handleUnaryCall<api_pb.FetchPartitionMetadataRequest, api_pb.FetchPartitionMetadataResponse>;
+  publish: grpc.handleUnaryCall<api_pb.PublishRequest, api_pb.PublishResponse>;
+  publishAsync: grpc.handleBidiStreamingCall<api_pb.PublishRequest, api_pb.PublishResponse>;
+  publishToSubject: grpc.handleUnaryCall<api_pb.PublishToSubjectRequest, api_pb.PublishToSubjectResponse>;
+  setCursor: grpc.handleUnaryCall<api_pb.SetCursorRequest, api_pb.SetCursorResponse>;
+  fetchCursor: grpc.handleUnaryCall<api_pb.FetchCursorRequest, api_pb.FetchCursorResponse>;
+}
+
 export class APIClient extends grpc.Client {
   constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
   createStream(argument: api_pb.CreateStreamRequest, callback: grpc.requestCallback<api_pb.CreateStreamResponse>): grpc.ClientUnaryCall;
