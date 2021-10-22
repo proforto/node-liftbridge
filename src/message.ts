@@ -194,12 +194,13 @@ export default class LiftbridgeMessage extends Message {
     public static toJSON(message: Message): IMessage {
         const rawObject = message.toObject();
         const { headersMap, ...messageWithoutHeadersMap } = rawObject;
+
         return {
             ...messageWithoutHeadersMap,
             key: Buffer.from(rawObject.key.toString(), 'base64').toString('utf8'),
             value: Buffer.from(rawObject.value.toString(), 'base64').toString('utf8'),
             headers: rawObject.headersMap.reduce((k, v) => {
-                const nk = { ...k };
+                const nk = { ...k } as { [key: string]: string };
                 nk[v[0]] = typeof v[1] === 'string' ? v[1] : Buffer.from(v[1]).toString('utf8');
                 return nk;
             }, {}),
