@@ -19,7 +19,7 @@ cleanup () {
 trap cleanup EXIT
 
 # Fetch Liftbridge gRPC Proto definition.
-wget -q https://raw.githubusercontent.com/liftbridge-io/liftbridge-grpc/8382298b935c78e9072d870570ba0e1585a29660/api.proto -O ../grpc/api.proto
+wget -q https://raw.githubusercontent.com/liftbridge-io/liftbridge-api/730020da5500bed190b745b1847bb2769978ae39/api.proto -O ../grpc/api.proto
 echo "Downloaded Liftbridge Proto file..."
 
 # Fetch & extract protoc.
@@ -45,7 +45,7 @@ NODE_MODULES_BIN_DIR=$(cd ../node_modules/.bin/ 2> /dev/null && pwd -P)
 PROTOC_GEN_TS_PATH="${NODE_MODULES_BIN_DIR}/protoc-gen-ts"
 PROTOC_GEN_GRPC_PATH="${NODE_MODULES_BIN_DIR}/grpc_tools_node_protoc_plugin"
 
-# Directory to write generated code to (.js and .d.ts files) 
+# Directory to write generated code to (.js and .d.ts files)
 OUT_DIR="../grpc/generated"
 mkdir -p ${OUT_DIR}
 
