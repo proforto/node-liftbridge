@@ -15,6 +15,7 @@ enum ConnectionErrorCodes {
     ERR_NO_ADDRESSES = 'ERR_NO_ADDRESSES',
     ERR_COULD_NOT_CONNECT = 'ERR_COULD_NOT_CONNECT',
     ERR_DEADLINE_EXCEEDED = 'ERR_DEADLINE_EXCEEDED',
+    ERR_ADDRESS_MIS_MATCH_ERROR = 'ERR_ADDRESS_MIS_MATCH_ERROR',
 }
 
 /**
@@ -23,6 +24,7 @@ enum ConnectionErrorCodes {
 enum CreateStreamErrorCodes {
     ERR_PARTITION_ALREADY_EXISTS = 'ERR_PARTITION_ALREADY_EXISTS',
     ERR_INVALID_PARTITIONS = 'ERR_INVALID_PARTITIONS',
+    ERR_EMPTY_CREATE_STREAM_RESPONSE = 'ERR_EMPTY_CREATE_STREAM_RESPONSE',
 }
 
 /**
@@ -42,6 +44,7 @@ enum MetadataErrorCodes {
     ERR_SUBJECT_NOT_FOUND_IN_METADATA = 'ERR_SUBJECT_NOT_FOUND_IN_METADATA',
     ERR_NO_KNOWN_PARTITION = 'ERR_NO_KNOWN_PARTITION',
     ERR_NO_KNOWN_LEADER_FOR_PARTITION = 'ERR_NO_KNOWN_LEADER_FOR_PARTITION',
+    ERR_EMPTY_METADATA_RESPONSE = 'ERR_EMPTY_METADATA_RESPONSE',
 }
 
 /**
@@ -202,6 +205,17 @@ export class DeadlineExceededError extends ConnectionError {
 /**
  * @category Error
  */
+export class AddressMisMatchError extends ConnectionError {
+    name = 'AddressMisMatchError';
+
+    message = 'Cannot add a client with a different address to the connectionpool';
+
+    code = ConnectionErrorCodes.ERR_ADDRESS_MIS_MATCH_ERROR;
+}
+
+/**
+ * @category Error
+ */
 export class PartitionAlreadyExistsError extends CreateStreamError {
     name = 'PartitionAlreadyExistsError';
 
@@ -219,6 +233,17 @@ export class InvalidPartitionsError extends CreateStreamError {
     message = 'Invalid number of stream partitions! Partitions should be equal to or greater than zero.';
 
     code = CreateStreamErrorCodes.ERR_INVALID_PARTITIONS;
+}
+
+/**
+ * @category Error
+ */
+export class EmptyCreateStreamResponseError extends CreateStreamError {
+    name = 'EmptyCreateStreamResponseError';
+
+    message = 'The response of the createStream returned without a CreateStreamResponse object.';
+
+    code = CreateStreamErrorCodes.ERR_EMPTY_CREATE_STREAM_RESPONSE;
 }
 
 /**
@@ -296,6 +321,17 @@ export class NoKnownLeaderForPartitionError extends MetadataError {
     message = 'No known leader for partition!';
 
     code = MetadataErrorCodes.ERR_NO_KNOWN_LEADER_FOR_PARTITION;
+}
+
+/**
+ * @category Error
+ */
+export class EmptyMetadataResponseError extends MetadataError {
+    name = 'EmptyMetadataResponseError';
+
+    message = 'The response of the fetchMetadata returned without a FetchMetadataResponse object.';
+
+    code = MetadataErrorCodes.ERR_EMPTY_METADATA_RESPONSE;
 }
 
 /**
